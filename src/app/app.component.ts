@@ -1,20 +1,22 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { isPlatformServer } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  template: '<h1>Server-Side API Response:</h1><pre>{{ response | json }}</pre>',
+  standalone: true,
+  imports: [CommonModule, HttpClientModule],
+  template: `
+    <h1>Server Response</h1>
+    <button (click)="load()">Load Data</button>
+    <pre>{{ response | json }}</pre>
+  `
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   response: any;
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {}
-
-  ngOnInit(): void {
-    if (isPlatformServer(this.platformId)) {
-      this.http.get('https://jsonplaceholder.typicode.com/posts/1')
-        .subscribe(data => this.response = data);
-    }
+  load() {
+    this.http.get('/api/data').subscribe(r => this.response = r);
   }
 }
