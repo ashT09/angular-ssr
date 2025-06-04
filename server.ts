@@ -1,5 +1,6 @@
 import 'zone.js/node';
 import express, { Request, Response } from 'express';
+import fetch from 'node-fetch';
 import { join } from 'path';
 import { existsSync, readFileSync } from 'fs';
 import { APP_BASE_HREF } from '@angular/common';

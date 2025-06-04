@@ -9,14 +9,16 @@ import { CommonModule } from '@angular/common';
   template: `
     <h1>Server Response</h1>
     <button (click)="load()">Load Data</button>
-    <pre>{{ response | json }}</pre>
+    <ng-container *ngFor="let r of responses">
+      <pre>{{ r | json }}</pre>
+    </ng-container>
   `
 })
 export class AppComponent {
-  response: any;
+  responses: any[] = [];
   constructor(private http: HttpClient) {}
 
   load() {
-    this.http.get('/api/data').subscribe(r => this.response = r);
+    this.http.get('/api/data').subscribe(r => this.responses.push(r));
   }
 }
