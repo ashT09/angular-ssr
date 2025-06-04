@@ -1,0 +1,42 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "projects": {
+    "ssr-api-app": {
+      "projectType": "application",
+      "root": "",
+      "sourceRoot": "src",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/ssr-api-app/browser",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.app.json"
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/ssr-api-app/server",
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json"
+          }
+        },
+        "serve-ssr": {
+          "builder": "@angular-devkit/build-angular:ssr-dev-server",
+          "options": {
+            "browserTarget": "ssr-api-app:build",
+            "serverTarget": "ssr-api-app:server"
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultProject": "ssr-api-app",
+    "analytics": "e0ae37e4-85b4-402d-9672-6781f14db7f3"
+  }
+}
